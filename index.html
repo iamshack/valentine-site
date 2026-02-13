@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Quieres ser mi San Valentín?</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+        overflow: hidden;
+    }
+
+    .card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        position: relative;
+    }
+
+    h1 {
+        color: #ff4d6d;
+        margin-bottom: 30px;
+    }
+
+    .buttons {
+        position: relative;
+        height: 80px;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        position: absolute;
+    }
+
+    #yesBtn {
+        background-color: #ff4d6d;
+        color: white;
+        left: 30%;
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background-color: #ccc;
+        color: #333;
+        left: 55%;
+    }
+
+    #message {
+        margin-top: 30px;
+        font-size: 22px;
+        color: #ff4d6d;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>¿Quieres ser mi San Valentín? 💖</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Sí 💘</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+
+    <div id="message">
+        ¡Sabía que dirías que sí! 🥰✨
+    </div>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const message = document.getElementById("message");
+
+    document.addEventListener("mousemove", function(e) {
+        const rect = noBtn.getBoundingClientRect();
+        const distance = Math.sqrt(
+            Math.pow(e.clientX - (rect.left + rect.width / 2), 2) +
+            Math.pow(e.clientY - (rect.top + rect.height / 2), 2)
+        );
+
+        if (distance < 100) {
+            const newX = Math.random() * (window.innerWidth - rect.width);
+            const newY = Math.random() * (window.innerHeight - rect.height);
+            noBtn.style.left = newX + "px";
+            noBtn.style.top = newY + "px";
+        }
+    });
+
+    yesBtn.addEventListener("click", function() {
+        message.style.display = "block";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+    });
+</script>
+
+</body>
+</html>
