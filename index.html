@@ -7,181 +7,250 @@
 
 <style>
 :root {
-    --pink-soft: #ffd6e8;
-    --peach: #ffb7a5;
-    --sunset: #ff8fa3;
-    --gold: #ffcf91;
-    --deep-rose: #ff4f7b;
+  --pink-soft:#ffd6e8;
+  --peach:#ffb7a5;
+  --sunset:#ff8fa3;
+  --deep-rose:#ff4f7b;
+  --gold:#ffcf91;
 }
 
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, var(--pink-soft), var(--peach));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+body{
+  margin:0;
+  height:100vh;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,var(--pink-soft),var(--peach));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:#444;
 }
 
-.card {
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(10px);
-    padding: 40px;
-    border-radius: 30px;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    max-width: 500px;
-    position: relative;
+/* Fondo pétalos */
+.petal{
+  position:absolute;
+  top:-50px;
+  animation:fall linear infinite;
+  opacity:0.8;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+  }
 }
 
-h1 {
-    color: var(--deep-rose);
-    margin-bottom: 10px;
+/* Tarjeta */
+.card{
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(15px);
+  padding:40px;
+  border-radius:30px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  max-width:520px;
+  position:relative;
+  z-index:2;
+  transition:all 1s ease;
 }
 
-h2 {
-    color: #555;
-    font-weight: normal;
+h1{
+  color:var(--deep-rose);
+  margin-bottom:5px;
 }
 
-img {
-    width: 100%;
-    border-radius: 20px;
-    margin-top: 15px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+.countdown{
+  font-size:18px;
+  margin-top:10px;
+  color:#666;
 }
 
-.buttons {
-    position: relative;
-    height: 90px;
-    margin-top: 25px;
+img{
+  width:100%;
+  border-radius:20px;
+  margin-top:15px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
 
-button {
-    padding: 14px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    position: absolute;
-    transition: 0.3s ease;
+.buttons{
+  position:relative;
+  height:90px;
+  margin-top:25px;
 }
 
-#yesBtn {
-    background: var(--sunset);
-    color: white;
-    left: 25%;
+button{
+  padding:14px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  position:absolute;
+  transition:0.3s ease;
 }
 
-#yesBtn:hover {
-    transform: scale(1.15);
+#yesBtn{
+  background:var(--sunset);
+  color:white;
+  left:25%;
+}
+#yesBtn:hover{ transform:scale(1.2); }
+
+#noBtn{
+  background:#999;
+  color:white;
+  left:60%;
 }
 
-#noBtn {
-    background: #999;
-    color: white;
-    left: 60%;
+#message{
+  margin-top:25px;
+  font-size:24px;
+  color:var(--deep-rose);
+  display:none;
+  animation:fadeIn 1.5s ease forwards;
 }
 
-#message {
-    margin-top: 25px;
-    font-size: 22px;
-    color: var(--deep-rose);
-    display: none;
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
 }
 
-.heart {
-    position: absolute;
-    animation: float 5s linear infinite;
+/* Brillo mágico */
+.glow{
+  position:absolute;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle,var(--gold),transparent 70%);
+  top:-100px;
+  left:-100px;
+  animation:glowMove 6s infinite alternate;
+  z-index:0;
+}
+@keyframes glowMove{
+  to{
+    top:200px;
+    left:200px;
+  }
 }
 
-@keyframes float {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-800px); opacity: 0; }
+/* Propuesta formal */
+.proposal{
+  display:none;
+  margin-top:20px;
+  font-size:22px;
+  color:#222;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <h1>Mary ♡</h1>
-    <h2>¿Quieres ser mi San Valentín?</h2>
+<div class="glow"></div>
 
-    <div class="buttons">
-        <button id="yesBtn">Sí 💖</button>
-        <button id="noBtn">No 😢</button>
-    </div>
+<div class="card" id="card">
+  <h1>Mary ♡</h1>
+  <h2>¿Quieres ser mi San Valentín?</h2>
 
-    <div id="message">
-        Feliz día de San Valentín,<br>
-        Amor mío de mi vida.<br><br>
-        Mary ♡ Mario 
-        💖
-    </div>
+  <div class="countdown" id="countdown"></div>
+
+  <div class="buttons">
+    <button id="yesBtn">Sí 💖</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+
+  <div id="message">
+    Feliz día de San Valentín,<br>
+    Amor mío de mi vida.<br><br>
+    Mary ♡ Mario 💖
+  </div>
+
+  <div class="proposal" id="proposal">
+    Mary… desde aquella tarde juntos supe que eras tú.<br><br>
+    ¿Quieres caminar conmigo cada primavera de nuestra vida? 🌸✨
+  </div>
 </div>
 
-<!-- YouTube Player oculto -->
+<!-- YouTube -->
 <div id="player" style="display:none;"></div>
 
 <script>
-let player;
-
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '0',
-        width: '0',
-        videoId: 'RHolsCq2Z6M',
-        playerVars: {
-            autoplay: 0,
-            controls: 0,
-            loop: 1,
-            playlist: 'RHolsCq2Z6M'
-        }
-    });
+/* Pétalos constantes */
+for(let i=0;i<30;i++){
+  let petal=document.createElement("div");
+  petal.innerHTML="🌸";
+  petal.classList.add("petal");
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.fontSize=(Math.random()*15+15)+"px";
+  petal.style.animationDuration=(Math.random()*10+5)+"s";
+  document.body.appendChild(petal);
 }
 
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
+/* Contador hasta 14 Feb */
+function updateCountdown(){
+  const now=new Date();
+  const nextValentine=new Date(now.getFullYear(),1,14);
+  if(now>nextValentine){
+    nextValentine.setFullYear(now.getFullYear()+1);
+  }
+  const diff=nextValentine-now;
+  const days=Math.floor(diff/(1000*60*60*24));
+  document.getElementById("countdown").innerHTML=
+  "Faltan "+days+" días para nuestro próximo San Valentín 💕";
+}
+updateCountdown();
+
+/* YouTube API */
+let player;
+function onYouTubeIframeAPIReady(){
+  player=new YT.Player('player',{
+    height:'0',
+    width:'0',
+    videoId:'RHolsCq2Z6M',
+    playerVars:{
+      autoplay:0,
+      controls:0,
+      loop:1,
+      playlist:'RHolsCq2Z6M'
+    }
+  });
+}
+const tag=document.createElement('script');
+tag.src="https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
 
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const message = document.getElementById("message");
+/* Botones */
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const message=document.getElementById("message");
+const proposal=document.getElementById("proposal");
 
-document.addEventListener("mousemove", function(e) {
-    const rect = noBtn.getBoundingClientRect();
-    const distance = Math.sqrt(
-        Math.pow(e.clientX - (rect.left + rect.width/2), 2) +
-        Math.pow(e.clientY - (rect.top + rect.height/2), 2)
-    );
-
-    if (distance < 120) {
-        const newX = Math.random() * (window.innerWidth - rect.width);
-        const newY = Math.random() * (window.innerHeight - rect.height);
-        noBtn.style.left = newX + "px";
-        noBtn.style.top = newY + "px";
-    }
+document.addEventListener("mousemove",function(e){
+  const rect=noBtn.getBoundingClientRect();
+  const distance=Math.sqrt(
+    Math.pow(e.clientX-(rect.left+rect.width/2),2)+
+    Math.pow(e.clientY-(rect.top+rect.height/2),2)
+  );
+  if(distance<120){
+    noBtn.style.left=Math.random()*70+"%";
+    noBtn.style.top=Math.random()*60+"px";
+  }
 });
 
-yesBtn.addEventListener("click", function() {
-    message.style.display = "block";
-    yesBtn.style.display = "none";
-    noBtn.style.display = "none";
+yesBtn.addEventListener("click",function(){
+  message.style.display="block";
+  proposal.style.display="block";
+  yesBtn.style.display="none";
+  noBtn.style.display="none";
+  if(player) player.playVideo();
 
-    if(player) player.playVideo();
-
-    for (let i = 0; i < 40; i++) {
-        let heart = document.createElement("div");
-        heart.innerHTML = "💖";
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
-        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-        document.body.appendChild(heart);
-    }
+  for(let i=0;i<50;i++){
+    let heart=document.createElement("div");
+    heart.innerHTML="💖";
+    heart.style.position="absolute";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.top=Math.random()*100+"vh";
+    heart.style.fontSize=(Math.random()*20+20)+"px";
+    heart.style.animation="fadeIn 2s ease";
+    document.body.appendChild(heart);
+  }
 });
 </script>
 
