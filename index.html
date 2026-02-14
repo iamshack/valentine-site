@@ -243,6 +243,9 @@
         #noBtn {
             background: linear-gradient(135deg, #E5E5E5 0%, #CCCCCC 100%);
             color: #666;
+        }
+
+        #noBtn.evading {
             position: absolute;
         }
 
@@ -458,7 +461,7 @@
 
     <!-- Audio de fondo -->
     <audio id="bgMusic" loop>
-        <source src="https://www.youtube.com/watch?v=RHolsCq2Z6M" type="audio/mpeg">
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -466,7 +469,7 @@
             <div class="card-content">
                 <div class="initial-content" id="initialContent">
                     <div class="heart-decoration">💖</div>
-                    <h1>Mary, mi amor</h1>
+                    <h1>Mi Amor</h1>
                     <p class="question">¿Quieres ser mi San Valentín? 🌹</p>
                     
                     <div class="buttons">
@@ -539,6 +542,9 @@
             const cardRect = card.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
             
+            // Agregar clase para posicionamiento absoluto
+            noBtn.classList.add('evading');
+            
             noBtnX = Math.random() * (cardRect.width - btnRect.width - 40) + 20;
             noBtnY = Math.random() * (cardRect.height - btnRect.height - 40) + 20;
             
@@ -551,9 +557,6 @@
             e.preventDefault();
             positionNoButton();
         });
-
-        // Posicionar inicialmente
-        setTimeout(positionNoButton, 100);
 
         // Mostrar mensaje especial
         function showSpecialMessage() {
@@ -604,13 +607,25 @@
                 audioIcon.textContent = '🔇';
                 audioPlaying = false;
             } else {
-                // Nota: YouTube no permite reproducción directa por restricciones CORS
-                // Necesitarás descargar el audio y servirlo localmente
-                alert('Para activar la música, descarga el audio de YouTube y súbelo a tu repositorio como "music.mp3"');
+                bgMusic.play().catch(err => {
+                    console.log('Error al reproducir:', err);
+                    alert('Para escuchar la música, haz clic en el ícono de audio después de interactuar con la página.');
+                });
                 audioIcon.textContent = '🔊';
                 audioPlaying = true;
             }
         }
+
+        // Auto-reproducir música al primer clic en la página
+        let firstInteraction = true;
+        document.addEventListener('click', () => {
+            if (firstInteraction) {
+                bgMusic.play().catch(err => console.log('Autoplay prevented:', err));
+                firstInteraction = false;
+                audioPlaying = true;
+                audioIcon.textContent = '🔊';
+            }
+        }, { once: true });
 
         // Inicializar partículas al cargar
         for (let i = 0; i < 20; i++) {
