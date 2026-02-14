@@ -3,114 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿Quieres ser mi San Valentín?</title>
+<title>Mary ♡ Mario</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Arial', sans-serif;
-        overflow: hidden;
-    }
+:root {
+    --pink-soft: #ffd6e8;
+    --peach: #ffb7a5;
+    --sunset: #ff8fa3;
+    --gold: #ffcf91;
+    --deep-rose: #ff4f7b;
+}
 
-    .card {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        position: relative;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, var(--pink-soft), var(--peach));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
-    h1 {
-        color: #ff4d6d;
-        margin-bottom: 30px;
-    }
+.card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    max-width: 500px;
+    position: relative;
+}
 
-    .buttons {
-        position: relative;
-        height: 80px;
-    }
+h1 {
+    color: var(--deep-rose);
+    margin-bottom: 10px;
+}
 
-    button {
-        padding: 12px 25px;
-        font-size: 18px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: 0.2s ease;
-        position: absolute;
-    }
+h2 {
+    color: #555;
+    font-weight: normal;
+}
 
-    #yesBtn {
-        background-color: #ff4d6d;
-        color: white;
-        left: 30%;
-    }
+img {
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
 
-    #yesBtn:hover {
-        transform: scale(1.1);
-    }
+.buttons {
+    position: relative;
+    height: 90px;
+    margin-top: 25px;
+}
 
-    #noBtn {
-        background-color: #ccc;
-        color: #333;
-        left: 55%;
-    }
+button {
+    padding: 14px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    position: absolute;
+    transition: 0.3s ease;
+}
 
-    #message {
-        margin-top: 30px;
-        font-size: 22px;
-        color: #ff4d6d;
-        display: none;
-    }
+#yesBtn {
+    background: var(--sunset);
+    color: white;
+    left: 25%;
+}
+
+#yesBtn:hover {
+    transform: scale(1.15);
+}
+
+#noBtn {
+    background: #999;
+    color: white;
+    left: 60%;
+}
+
+#message {
+    margin-top: 25px;
+    font-size: 22px;
+    color: var(--deep-rose);
+    display: none;
+}
+
+.heart {
+    position: absolute;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-800px); opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-    <h1>¿Quieres ser mi San Valentín? 💖</h1>
+    <h1>Mary ♡</h1>
+    <h2>¿Quieres ser mi San Valentín?</h2>
+
+    <!-- Cambia el nombre del archivo si lo subes junto al HTML -->
+    <img src="anime.png" alt="Mary y Mario Anime">
 
     <div class="buttons">
-        <button id="yesBtn">Sí 💘</button>
+        <button id="yesBtn">Sí 💖</button>
         <button id="noBtn">No 😢</button>
     </div>
 
     <div id="message">
-        ¡Sabía que dirías que sí! 🥰✨
+        Feliz día de San Valentín,<br>
+        Amor mío de mi vida.<br><br>
+        Mary ♡ Mario 💖
     </div>
 </div>
 
+<!-- YouTube Player oculto -->
+<div id="player" style="display:none;"></div>
+
 <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const message = document.getElementById("message");
+let player;
 
-    document.addEventListener("mousemove", function(e) {
-        const rect = noBtn.getBoundingClientRect();
-        const distance = Math.sqrt(
-            Math.pow(e.clientX - (rect.left + rect.width / 2), 2) +
-            Math.pow(e.clientY - (rect.top + rect.height / 2), 2)
-        );
-
-        if (distance < 100) {
-            const newX = Math.random() * (window.innerWidth - rect.width);
-            const newY = Math.random() * (window.innerHeight - rect.height);
-            noBtn.style.left = newX + "px";
-            noBtn.style.top = newY + "px";
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        height: '0',
+        width: '0',
+        videoId: 'RHolsCq2Z6M',
+        playerVars: {
+            autoplay: 0,
+            controls: 0,
+            loop: 1,
+            playlist: 'RHolsCq2Z6M'
         }
     });
+}
 
-    yesBtn.addEventListener("click", function() {
-        message.style.display = "block";
-        yesBtn.style.display = "none";
-        noBtn.style.display = "none";
-    });
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const message = document.getElementById("message");
+
+document.addEventListener("mousemove", function(e) {
+    const rect = noBtn.getBoundingClientRect();
+    const distance = Math.sqrt(
+        Math.pow(e.clientX - (rect.left + rect.width/2), 2) +
+        Math.pow(e.clientY - (rect.top + rect.height/2), 2)
+    );
+
+    if (distance < 120) {
+        const newX = Math.random() * (window.innerWidth - rect.width);
+        const newY = Math.random() * (window.innerHeight - rect.height);
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+    }
+});
+
+yesBtn.addEventListener("click", function() {
+    message.style.display = "block";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+
+    if(player) player.playVideo();
+
+    for (let i = 0; i < 40; i++) {
+        let heart = document.createElement("div");
+        heart.innerHTML = "💖";
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(heart);
+    }
+});
 </script>
 
 </body>
