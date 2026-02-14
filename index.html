@@ -78,14 +78,22 @@ h2{
 }
 
 img{
-  width:100%;
-  max-width:350px;   /* controla el tamaño máximo */
-  height:auto;
+  width:400px;
+  height:400px;
+  object-fit:cover; /* evita que se deforme */
   border-radius:20px;
   margin:20px auto 0 auto;
   display:block;
   box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
+
+  @media (max-width: 500px){
+  img{
+    width:280px;
+    height:280px;
+  }
+}
+
 
 
 @keyframes fadeIn{
